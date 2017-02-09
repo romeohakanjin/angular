@@ -1,0 +1,27 @@
+<a href="#/">Revenir aux articles</a>
+<div>
+	<select ng-model="order">
+		<option value="username">Organiser par username</option>
+		<option value="content">Organiser par contenu</option>
+	</select>
+
+	<div>
+	<h2>{{title}}</h2>
+		<div ng-repeat="comment in comments | orderBy : order | filter: {content:query}">
+			<p>
+				<strong>Username : {{ comment.username }}</strong>
+				<br/>
+				Content : {{comment.content}}
+			</p>
+		</div>
+	</div>
+
+	<hr>
+
+	<div>
+		<label>Rechercher un user : </label>
+		<input type="text" ng-model="query" placeholder="Recherche">
+		<br />
+			{{comments | filter: query}}
+	</div>
+</div>
