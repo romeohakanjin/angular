@@ -26,14 +26,13 @@
 
 		    		getPosts : function(){
 		    			var deffered = $q.defer();
-		    			$http.get('posts.json').success(function(data, status){
-		    				factory.posts = data;
+		    			$http.get('posts.json').then(function(data, status){
+		    				factory.posts = data.data;
 		    				deffered.resolve(factory.posts);
-		    			}).error(function(data, status){
+		    			}).then(function(data, status){
 		    				deffered.reject('Impossible de récupérer les articles');
 		    			});
 				    	return deffered.promise;
-
 				    },
 
 				    getPost : function(id){
@@ -52,11 +51,11 @@
 		    
 
 		    monApp.controller('PostsCtrl', function($scope, Post){
-		    	$scope.posts = Post.getPosts().then(function(){
-		    		$scope.posts = posts;
-		    	}, function(msg){
-		    		altert(msg);
-		    	}
+		    	$scope.posts = Post.getPosts().then(function(posts){
+		    			$scope.posts = posts;
+			    	}, function(msg){
+			    		altert(msg);
+			    	}
 		    	);
 		    });
 
